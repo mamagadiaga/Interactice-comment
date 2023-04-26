@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments Section</title>
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <main>
+        <div class="container mt-5" id="comments-container">
+          <form id="comment-form">
+            <div class="row justify-content-center" id="comment-${comment.id}">
+                <div class="col-12 col-md-8">
+                  <div class="card mb-3 border-0 shadow mw-100">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-2 col-md-1 reply1-column">
+                          <div class="btn-group flex-column reply1-colunm">
+                            <button
+                              type="button"
+                              class="btn btn-light border-0 upvote">
+                              <i class="bi bi-plus"></i>
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-light border-0 vote-count">
+                              5
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-light border-0 downvote">
+                              <i class="bi bi-dash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-10 col-md-11 col-sm-12">
+                          <div
+                            class="row comment"
+                            data-author=""
+                            data-date=""
+                            data-content="">
+                            <div
+                              class="col-8 col-md-10 col-sm-12 profil d-flex align-items-center comment-header">
+                              <img
+                                src="./images/avatars/image-maxblagun.png"
+                                class="img-fluid" />
+                              <span
+                                class="text-dark fw-bold ms-2 nom comment-author"
+                                data-author
+                                >maxbla</span
+                              >
+                              <span
+                                class="text-black-50 ms-4 date comment-day"
+                                data-date
+                                >2 weeks ago</span
+                              >
+                            </div>
+                            <div
+                              class="col-4 col-md-2 d-flex justify-content-end align-items-center reply2-column">
+                              <span
+                                class="text-primary fw-bold content-replies"
+                                data-replies-container>
+                                <i class="bi bi-reply-fill"></i> Reply
+                              </span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <p
+                                class="text-black-50 p-2 pb-4 comment-content"
+                                data-content>
+                                Woah, your project looks awesome! How long have you
+                                been coding for? I'm still new, but think I want to
+                                dive into React as well soon. Perhaps you can give me
+                                an insight on where I can learn React? Thanks!
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <div class="row justify-content-center" id="comment-${comment.id}">
+            <div class="col-12 col-md-8">
+              <div class="card mb-3 border-0 shadow mw-100">
+                <div class="card-body">
+                  <div
+                    class="row d-flex justify-content-center align-items-center">
+                    <div
+                      class="col-lg-2 d-none d-lg-flex justify-content-center align-items-center order-lg-first mb-3 mb-lg-0">
+                      <img src="./images/avatars/image-juliusomo.png" class="" />
+                    </div>
+                    <div class="col-lg-8 order-md-first">
+                      <div class="form-floating">
+                        <textarea
+                          class="form-control"
+                          placeholder="Leave a comment here"
+                          id="comment"
+                          style="height: 100px"></textarea>
+                        <label for="floatingTextarea2"
+                          >Ajouter un commentaire</label
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="col-lg-2 d-none d-lg-flex justify-content-center align-items-center order-lg-last">
+                      <button class="btn btn-primary fw-bold" id="send">Send</button>
+                    </div>
+                    <div class="col-12 d-lg-none">
+                      <div class="row mt-3">
+                        <div
+                          class="col-6 d-flex justify-content-start align-items-center">
+                          <img
+                            src="./images/avatars/image-juliusomo.png"
+                            class="" />
+                        </div>
+                        <div
+                          class="col-6 d-flex justify-content-end align-items-center">
+                          <button class="btn btn-primary fw-bold" id="send" type="submit">Send</button>
+                        </div>
+                      </div>
+                    </div>
+                     <!-- Comments -->
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        </div>
+
+  
+
+  <!-- <script src="./index.js"></script> -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+
+
+  <script>
+    
+
+async function ecrire () {
+  
+  let response= await fetch ('http://localhost:3000/comments');
+  let data= await response.json()
+
+  data[0].replies.push(1897)
+
+  let putResponse= await fetch ('http://localhost:3000/comments',{
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
+
+//  Récupérer les données du fichier JSON
+//   data.comments[0].replies.push(1897)
+//  fetch('http://localhost:3000/comments')
+//  .then(response => response.json())
+//  .then(data =>{
+// //   data.comments[0].replies.push(1897)
+// data
+//   console.log(data)
+//  } ) 
+//  .catch(error => console.error(error));
+
+// SCORE
+ const upvoteButtons = document.querySelectorAll(".upvote");
+ const downvoteButtons = document.querySelectorAll(".downvote");
+ const voteCountElements = document.querySelectorAll(".vote-count");
+
+ for (let i = 0; i < upvoteButtons.length; i++) {
+   let voteCount = 0;
+   upvoteButtons[i].addEventListener("click", function () {
+     voteCount++;
+     voteCountElements[i].innerText = voteCount;
+   });
+
+   downvoteButtons[i].addEventListener("click", function () {
+     voteCount--;
+     voteCountElements[i].innerText = voteCount;
+   });
+ }
+
+ function addCommentsToPage(comments) {
+  const commentContainer = document.querySelector(".comments-container");
+
+  comments.forEach((comment) => {
+    const commentCard = document.createElement("div");
+    commentCard.classList.add("comment-card");
+    commentCard.id = `comment-${comment.id}`;
+
+    const commentContent = document.createElement("div");
+    commentContent.classList.add("comment-content");
+
+    const commentDate = document.createElement("div");
+    commentDate.classList.add("comment-day");
+    const commentDateObj = new Date(comment.createdAt);
+    const currentDate = new Date(); 
+    const timeDiff = currentDate.getTime() - commentDateObj.getTime();
+    const diffInDays = Math.round(timeDiff / (1000 * 3600 * 24));
+    if (diffInDays === 0) {
+      commentDate.textContent = "Aujourd'hui";
+    } else if (diffInDays === 1) {
+      commentDate.textContent = "Hier";
+    } else if (diffInDays < 7) {
+      commentDate.textContent = `${diffInDays} jours`;
+    } else if (diffInDays < 30) {
+      const diffInWeeks = Math.floor(diffInDays / 7);
+      commentDate.textContent = `${diffInWeeks} semaines`;
+    } else if (diffInDays < 365) {
+      const diffInMonths = Math.floor(diffInDays / 30);
+      commentDate.textContent = `${diffInMonths} mois`;
+    } else {
+      const diffInYears = Math.floor(diffInDays / 365);
+      commentDate.textContent = `${diffInYears} ans`;
+    }
+
+    commentCard.appendChild(commentContent);
+    commentCard.appendChild(commentDate);
+
+
+    commentContainer.appendChild(commentCard);
+  });
+}  
+
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

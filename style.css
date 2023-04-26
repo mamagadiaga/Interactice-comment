@@ -1,0 +1,149 @@
+/* 
+.attribution {
+  text-align: center;
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}
+
+@media (max-width: 992px) {
+  .reply1-column {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 10px;
+  }
+  .reply1-colunm {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+  .reply2-column {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+  }
+  .profil {
+    width: 100% !important;
+  }
+}
+@media (max-width: 464px) {
+  .img-fluid {
+    width: 15% !important;
+  }
+  .nom {
+    width: 30% !important;
+  }
+  .date {
+    width: 55% !important;
+  }
+} */
+
+
+
+/* Ajouter du style pour les commentaires */
+
+/* .comment img {
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+}
+#comments-list li{
+  border: none;
+  margin: 5%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+#comments-list li li{
+  margin: 5%;
+  box-shadow:none;  
+}
+#comments-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+} */
+
+
+/* 
+*/
+
+div {
+  display: block;
+  padding: 0;
+  margin-top: 2%;
+}
+
+
+.comment {
+  display: flex;
+  width: 100%;
+  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+}
+
+.comment img {
+  margin-right: 5%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.comment-reply {
+  width: 100%;
+  /* padding: 5%; */
+  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+}
+
+.comment-content {
+  flex-grow: 1;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.comment-date {
+  font-size: 0.8rem;
+}
+
+.comment-text {
+  margin-bottom: 1rem;
+}
+
+.btn-reply {
+  font-size: 0.8rem;
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  float: right;
+}
+ 
+.comments-list, .replies {
+  display: flex;
+  flex-direction: column;
+} 
+.submit-btn {
+  margin-top: 10px; 
+  float: right;
+}
+.score-btn-plus{
+  border: 1px solid #ccc;
+  border-right: none;
+}
+.reply-score span{
+background-color: #cccccc3d;
+padding: 2px;
+padding-bottom: 3px;
+border: 1px solid #ccc;
+font-size: 16px;
+border-left: none;
+border-right: none;
+}
+.score-btn-minus{
+  border: 1px solid #ccc;
+  border-left: none;
+}
