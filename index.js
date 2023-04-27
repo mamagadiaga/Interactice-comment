@@ -1,9 +1,8 @@
-// Recuperation des données à partir JSON ou du localStorage
+// Charger les données des commentaires à partir du fichier JSON ou du localStorage
 let db;
 
 if (localStorage.getItem('comments')) {
   db = JSON.parse(localStorage.getItem('comments'));
-  renderComments();
 } else {
   fetch('./db.json')
     .then(response => response.json())
@@ -52,9 +51,9 @@ function createReplyForm(commentId, div) {
     <div class="form-group">
       <textarea id="reply-text" class="form-control" rows="3"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Reply</button>
+    <button type="submit" class="btn btn-primary">Send</button>
   `;
-  div.appendChild(replyForm);
+  li.appendChild(replyForm);
 
   replyForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -73,10 +72,9 @@ function createReplyForm(commentId, div) {
       }
     };
     addReply(commentId, newReply);
-    div.removeChild(replyForm);
+    li.removeChild(replyForm);
   });
 }
-
 
 
 // Fonction pour afficher les commentaires
@@ -135,7 +133,6 @@ fetch('./db.json')
     renderComments();
   });
 
-  // REPLY
   function createCommentElement(comment, isReply = false) {
     const div = document.createElement('div');
     div.classList.add('comment');
@@ -176,29 +173,24 @@ fetch('./db.json')
     commentContent.appendChild(replyButton);
   
     const replyScore = document.createElement('div');
-    replyScore.classList.add('btn-group', 'reply-score');
+    replyScore.classList.add('reply-score');
     commentContent.appendChild(replyScore);
-    
+  
     const minusButton = document.createElement('button');
-    minusButton.classList.add('btn', 'btn-light', 'downvote');
-    const minusIcon = document.createElement('i');
-    minusIcon.classList.add('bi', 'bi-dash');
-    minusButton.appendChild(minusIcon);
+    minusButton.classList.add('score-btn', 'score-btn-minus');
+    minusButton.textContent = '-';
     replyScore.appendChild(minusButton);
+  
     
-    const scoreCounter = document.createElement('button');
-    scoreCounter.classList.add('btn', 'btn-light', 'vote-count');
+    const scoreCounter = document.createElement('span');
     scoreCounter.textContent = comment.score;
     replyScore.appendChild(scoreCounter);
-
-    const plusButton = document.createElement('button');
-    plusButton.classList.add('btn', 'btn-light', 'upvote');
-    const plusIcon = document.createElement('i');
-    plusIcon.classList.add('bi', 'bi-plus');
-    plusButton.appendChild(plusIcon);
-    replyScore.appendChild(plusButton);
     
-  
+    const plusButton = document.createElement('button');
+    plusButton.classList.add('score-btn', 'score-btn-plus');
+    plusButton.textContent = '+';
+    replyScore.appendChild(plusButton);
+
     const repliesList = document.createElement('div');
     repliesList.classList.add('replies');
     commentContent.appendChild(repliesList);
@@ -217,38 +209,30 @@ fetch('./db.json')
   
     replyButton.addEventListener('click', () => {
       const replyForm = document.createElement('form');
-      replyForm.classList.add('reply-form');
-      replyForm.style.display = 'flex';
-      replyForm.style.alignItems = 'center';
-    
-      const img = document.createElement('img');
-      img.src = comment.user.image.png;
-      img.alt = comment.user.username;
-      replyForm.appendChild(img);
-    
+      replyForm.classList.add('reply-form', 'form-group');
+  
       const formGroup = document.createElement('div');
       formGroup.classList.add('form-group');
       replyForm.appendChild(formGroup);
-    
+  
       const label = document.createElement('label');
       label.htmlFor = 'reply-text';
       formGroup.appendChild(label);
-    
+  
       const textarea = document.createElement('textarea');
       textarea.id = 'reply-text';
       textarea.classList.add('form-control');
       textarea.rows = 3;
-      textarea.cols = 50;
       formGroup.appendChild(textarea);
-    
+  
       const submitButton = document.createElement('button');
       submitButton.type = 'submit';
       submitButton.classList.add('btn', 'btn-primary', 'submit-btn');
-      submitButton.textContent = 'Reply';
+      submitButton.textContent = 'Send';
       replyForm.appendChild(submitButton);
-    
+  
       commentContent.appendChild(replyForm);
-    
+  
       submitButton.addEventListener('click', event => {
         event.preventDefault();
         const replyText = textarea.value;
@@ -256,12 +240,13 @@ fetch('./db.json')
         commentContent.removeChild(replyForm);
       });
     });
-    
   
     return div;
   }
   
 
+
+  
 //BOUTON SEND
 let mcomments = [];
 
@@ -278,7 +263,7 @@ function addComment(comment) {
   localStorage.setItem('comments', JSON.stringify(mcomments));
 }
 
-// Ajouter un nouveau commentaire 
+// Ajouter un nouveau commentaire lorsqu'on clique sur le bouton "Send"
 document.getElementById('comment-send-btn').addEventListener('click', event => {
   event.preventDefault();
 

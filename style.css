@@ -1,101 +1,35 @@
-/* 
-.attribution {
+
+/* .attribution {
   text-align: center;
 }
 .attribution a {
   color: hsl(228, 45%, 44%);
-}
-
-@media (max-width: 992px) {
-  .reply1-column {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 10px;
-  }
-  .reply1-colunm {
-    display: flex !important;
-    flex-direction: row !important;
-  }
-  .reply2-column {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 10px;
-  }
-  .profil {
-    width: 100% !important;
-  }
-}
-@media (max-width: 464px) {
-  .img-fluid {
-    width: 15% !important;
-  }
-  .nom {
-    width: 30% !important;
-  }
-  .date {
-    width: 55% !important;
-  }
 } */
 
-
-
-/* Ajouter du style pour les commentaires */
-
-/* .comment img {
-  max-width: 50px;
-  max-height: 50px;
-  border-radius: 50%;
-}
-#comments-list li{
-  border: none;
-  margin: 5%;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-#comments-list li li{
-  margin: 5%;
-  box-shadow:none;  
-}
-#comments-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-} */
-
-
-/* 
-*/
-*, body{
-  padding: 0;
-  margin: 0;
-}
-div {
+/* div {
   display: block;
   padding: 0;
   margin-top: 2%;
-}
+} */
 
 
-.comment {
+/* .comment {
   display: flex;
-  width: 100%;
+  width: 100%; */
   /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
-}
+/* }
 
 .comment img {
   margin-right: 5%;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-}
+} */
 
+/* 
 .comment-reply {
   width: 100%;
-  /* padding: 5%; */
-  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
 }
-
 .comment-content {
   flex-grow: 1;
 }
@@ -123,6 +57,7 @@ div {
   cursor: pointer;
   margin-bottom: 0.5rem;
   float: right;
+  margin-top: 5%;
 }
  
 .comments-list, .replies {
@@ -134,7 +69,7 @@ div {
   float: right;
   margin-left: 5%;
 }
-/* .score-btn-plus{
+.score-btn-plus{
   border: 1px solid #ccc;
   border-right: none;
 }
@@ -150,17 +85,165 @@ border-right: none;
 .score-btn-minus{
   border: 1px solid #ccc;
   border-left: none;
+}
+.mnctn {
+  width: 50%;
+}
+@media (max-width: 860px) {
+  .mnctn {
+    width: 100% !important;
+  }
+
+}  
+
+ 
+form.reply-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+}
+
+@media screen and (max-width: 570px) {
+  .reply-form {
+    display: flex !important;
+    width: 100% !important;
+    flex-wrap: wrap;
+  }
+  .submit-btn{
+   margin-left: 0;
+  }
 } */
 
 
 
 
 
-.mnctn{
-  width: 50%;
+
+
+
+
+
+
+
+
+.score-btn-minus{
+  border: 1px solid #ccc;
+  border-right: none;
 }
-@media (max-width:730px) {
-  .mnctn{
-    width: 80%;
-  }  
+.reply-score span{
+background-color: #cccccc3d;
+padding: 2px;
+padding-bottom: 3px;
+border: 1px solid #ccc;
+font-size: 16px;
+border-left: none;
+border-right: none;
+}
+.score-btn-plus{
+  border: 1px solid #ccc;
+  border-left: none;
+}
+
+.btn-reply {
+  border: none; 
+  color: blue;
+  background-color: transparent;
+  float: right;
+}
+.comment-container {
+  margin-bottom: 5%;
+}
+.comment-reply {
+  margin-top: 3%;
+}
+.comment {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+
+.comment-body p {
+  margin: 0;
+}
+
+.reply {
+  /* border: 1px solid #ccc; */
+  border-radius: 0.5rem;
+  margin-left: 2rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.reply .comment-header {
+  margin-bottom: 0.5rem;
+}
+
+.reply .comment-header .username {
+  font-weight: bold;
+}
+
+.reply .comment-header .timestamp {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.reply .comment-body p {
+  margin: 0;
+}
+
+.replying-to {
+  font-style: italic;
+}
+.comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.comment-header img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.comment-header .username {
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.comment-header .timestamp {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+@media (max-width: 860px) {
+  .mnctn {
+    width: 80% !important;
+  }
+}  
+@media (max-width: 520px) {
+  .mnctn {
+    width: 100% !important;
+  }
+}  
+
+.reply-form {
+  display: flex;
+  align-items: center;
+}
+.form-group {
+  width: 100%;
+}
+
+/* .reply-form textarea {
+  margin-right: 10px;
+} */
+
+.reply-form .submit-btn {
+  margin-left: 5%;
 }
