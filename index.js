@@ -278,6 +278,7 @@ function addComment(comment) {
   localStorage.setItem('comments', JSON.stringify(mcomments));
 }
 
+// Ajouter un nouveau commentaire 
 document.getElementById('comment-send-btn').addEventListener('click', event => {
   event.preventDefault();
 
@@ -302,7 +303,7 @@ document.getElementById('comment-send-btn').addEventListener('click', event => {
   document.getElementById('comment').value = '';
 });
 
-
+// Ajouter un nouveau commentaire lorsqu'on clique sur le bouton "Send" (mobile)
 document.getElementById('comment-send-btn-mobile').addEventListener('click', event => {
   event.preventDefault();
 
