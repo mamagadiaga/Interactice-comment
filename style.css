@@ -162,6 +162,7 @@ border-right: none;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   padding: 1rem;
+  margin-bottom: 2%;
 }
 
 
@@ -170,7 +171,7 @@ border-right: none;
 }
 
 .reply {
-  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
   border-radius: 0.5rem;
   margin-left: 2rem;
   margin-top: 1rem;

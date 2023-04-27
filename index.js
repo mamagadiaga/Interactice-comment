@@ -44,6 +44,7 @@ function addReply(commentId, reply) {
 }
 
 // Fonction pour afficher le formulaire de réponse à un commentaire
+// Fonction pour afficher le formulaire de réponse à un commentaire
 function createReplyForm(commentId, div) {
   const replyForm = document.createElement('form');
   replyForm.className = 'reply-form';
@@ -74,7 +75,16 @@ function createReplyForm(commentId, div) {
     addReply(commentId, newReply);
     li.removeChild(replyForm);
   });
+
+  // Récupérer le nom de l'utilisateur à partir du commentaire parent
+  const comment = db.comments.find(c => c.id === commentId);
+  const userName = comment.user.username;
+
+  // Mettre à jour la valeur du champ texte avec le nom de l'utilisateur
+  const replyText = replyForm.querySelector('#reply-text');
+  replyText.value = `@${userName} `;
 }
+
 
 
 // Fonction pour afficher les commentaires
@@ -210,6 +220,7 @@ fetch('./db.json')
     replyButton.addEventListener('click', () => {
       const replyForm = document.createElement('form');
       replyForm.classList.add('reply-form', 'form-group');
+      
   
       const formGroup = document.createElement('div');
       formGroup.classList.add('form-group');
