@@ -36,14 +36,13 @@ function addReply(commentId, reply) {
     }
   };
   
-
-  comment.replies.push(newReply);
+  comment.replies.unshift(newReply); // Ajouter la nouvelle réponse au début du tableau
 
   localStorage.setItem('comments', JSON.stringify(db));
   renderComments();
 }
 
-// Fonction pour afficher le formulaire de réponse à un commentaire
+
 // Fonction pour afficher le formulaire de réponse à un commentaire
 function createReplyForm(commentId, div) {
   const replyForm = document.createElement('form');
@@ -220,7 +219,6 @@ fetch('./db.json')
     replyButton.addEventListener('click', () => {
       const replyForm = document.createElement('form');
       replyForm.classList.add('reply-form', 'form-group');
-      
   
       const formGroup = document.createElement('div');
       formGroup.classList.add('form-group');
@@ -256,23 +254,39 @@ fetch('./db.json')
   }
   
 
-
-  
 //BOUTON SEND
 let mcomments = [];
+
+// Définir les informations de l'utilisateur connecté
+let currentUser = {
+  image: {
+    png: './images/avatars/image-john.png',
+    webp: './images/avatars/image-john.webp'
+  },
+  username: 'john'
+};
 
 function addComment(comment) {
   const commentsList = document.getElementById('comments-list');
   const div = document.createElement('div');
   div.className = 'comment';
   div.innerHTML = `
-    <p>${comment.content}</p>
+    <div class="comment-header">
+      <img src="${comment.user.image.png}" alt="${comment.user.username}" class="avatar">
+      <div class="comment-info">
+        <h3 class="comment-author">${comment.user.username}</h3>
+        <span class="comment-date">${comment.createdAt}</span>
+        <span class="comment-score">${comment.score}</span>
+      </div>
+    </div>
+    <p class="comment-content">${comment.content}</p>
   `;
   commentsList.appendChild(div);
 
   mcomments.push(comment);
   localStorage.setItem('comments', JSON.stringify(mcomments));
 }
+
 
 // Ajouter un nouveau commentaire lorsqu'on clique sur le bouton "Send"
 document.getElementById('comment-send-btn').addEventListener('click', event => {
@@ -286,11 +300,8 @@ document.getElementById('comment-send-btn').addEventListener('click', event => {
     createdAt: new Date().toLocaleString(),
     score: 0, 
     user: {
-      image: {
-        png: './images/avatars/image-john.png',
-        webp: './images/avatars/image-john.webp'
-      },
-      username: 'john'
+      image: currentUser.image,
+      username: currentUser.username
     }
   };
   
@@ -311,11 +322,8 @@ document.getElementById('comment-send-btn-mobile').addEventListener('click', eve
     createdAt: new Date().toLocaleString(),
     score: 0, 
     user: {
-      image: {
-        png: './images/avatars/image-john.png',
-        webp: './images/avatars/image-john.webp'
-      },
-      username: 'john'
+      image: currentUser.image,
+      username: currentUser.username
     }
   };
   
