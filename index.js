@@ -7,7 +7,7 @@ fetch('./db.json')
     renderComments();
   })
   .catch(error => console.log(error));
-  
+
 // Fonction pour ajouter une réponse à un commentaire
 function addReply(commentId, reply) {
   const comment = db.comments.find(c => c.id === commentId);
@@ -15,6 +15,7 @@ function addReply(commentId, reply) {
   if (!comment.replies) {
     comment.replies = [];
   }
+  
   const newReply = {
     id: Date.now(),
     content: reply,
@@ -30,6 +31,8 @@ function addReply(commentId, reply) {
   };
   
   comment.replies.unshift(newReply); // Ajouter la nouvelle réponse au début du tableau
+  
+  console.log('New reply added:', newReply);
 
   renderComments();
 }
@@ -65,8 +68,6 @@ function createReplyForm(commentId, div) {
     addReply(commentId, newReply);
     div.removeChild(replyForm);
   });
-
-  
 
   // Récupérer le nom de l'utilisateur à partir du commentaire parent
   const comment = db.comments.find(c => c.id === commentId);
@@ -181,7 +182,6 @@ fetch('./db.json')
     plusButton.classList.add('score-btn', 'score-btn-plus');
     plusButton.textContent = '+';
     replyScore.appendChild(plusButton);
-    
   
     const repliesList = document.createElement('div');
     repliesList.classList.add('replies');
@@ -198,7 +198,6 @@ fetch('./db.json')
         scoreCounter.textContent = comment.score;
       }
     });
-    
   
     replyButton.addEventListener('click', () => {
       const replyForm = document.createElement('form');
