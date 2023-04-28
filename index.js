@@ -1,18 +1,12 @@
-// Charger les données des commentaires à partir du fichier JSON ou du localStorage
 let db;
 
-if (localStorage.getItem('comments')) {
-  db = JSON.parse(localStorage.getItem('comments'));
-} else {
-  fetch('./db.json')
-    .then(response => response.json())
-    .then(data => {
-      db = data;
-      localStorage.setItem('comments', JSON.stringify(db));
-      renderComments();
-    })
-    .catch(error => console.log(error));
-}
+fetch('./db.json')
+  .then(response => response.json())
+  .then(data => {
+    db = data;
+    renderComments();
+  })
+  .catch(error => console.log(error));
 
 // Fonction pour ajouter une réponse à un commentaire
 function addReply(commentId, reply) {
@@ -38,10 +32,8 @@ function addReply(commentId, reply) {
   
   comment.replies.unshift(newReply); // Ajouter la nouvelle réponse au début du tableau
 
-  localStorage.setItem('comments', JSON.stringify(db));
   renderComments();
 }
-
 
 // Fonction pour afficher le formulaire de réponse à un commentaire
 function createReplyForm(commentId, div) {
@@ -117,15 +109,6 @@ function renderComments() {
   });
 }
 
-  
-
-let comments = JSON.parse(localStorage.getItem('comments'));
-
-
-if (!comments) {
-  comments = [];
-}
-
 // Afficher les commentaires
 const commentsList = document.getElementById('comments-list');
 
@@ -133,7 +116,6 @@ fetch('./db.json')
   .then(response => response.json())
   .then(data => {
     db = data;
-    localStorage.setItem('comments', JSON.stringify(db));
     renderComments();
   })
   .catch(error => {
@@ -141,10 +123,10 @@ fetch('./db.json')
     db = {};
     renderComments();
   });
-
   function createCommentElement(comment, isReply = false) {
     const div = document.createElement('div');
     div.classList.add('comment');
+  
     if (isReply) {
       div.classList.add('comment-reply');
     }
@@ -190,16 +172,15 @@ fetch('./db.json')
     minusButton.textContent = '-';
     replyScore.appendChild(minusButton);
   
-    
     const scoreCounter = document.createElement('span');
     scoreCounter.textContent = comment.score;
     replyScore.appendChild(scoreCounter);
-    
+  
     const plusButton = document.createElement('button');
     plusButton.classList.add('score-btn', 'score-btn-plus');
     plusButton.textContent = '+';
     replyScore.appendChild(plusButton);
-
+  
     const repliesList = document.createElement('div');
     repliesList.classList.add('replies');
     commentContent.appendChild(repliesList);
@@ -253,42 +234,123 @@ fetch('./db.json')
     return div;
   }
   
-
+  
+//BOUTON SEND
 //BOUTON SEND
 let mcomments = [];
-
-// Définir les informations de l'utilisateur connecté
-let currentUser = {
-  image: {
-    png: './images/avatars/image-john.png',
-    webp: './images/avatars/image-john.webp'
-  },
-  username: 'john'
-};
 
 function addComment(comment) {
   const commentsList = document.getElementById('comments-list');
   const div = document.createElement('div');
   div.className = 'comment';
-  div.innerHTML = `
-    <div class="comment-header">
-      <img src="${comment.user.image.png}" alt="${comment.user.username}" class="avatar">
-      <div class="comment-info">
-        <h3 class="comment-author">${comment.user.username}</h3>
-        <span class="comment-date">${comment.createdAt}</span>
-        <span class="comment-score">${comment.score}</span>
-      </div>
-    </div>
-    <p class="comment-content">${comment.content}</p>
-  `;
+
+  const img = document.createElement('img');
+  img.src = comment.user.image.png;
+  img.alt = comment.user.username;
+  div.appendChild(img);
+
+  const commentContent = document.createElement('div');
+  commentContent.classList.add('comment-content');
+  div.appendChild(commentContent);
+
+  const commentHeader = document.createElement('div');
+  commentHeader.classList.add('comment-header');
+  commentContent.appendChild(commentHeader);
+
+  const strong = document.createElement('strong');
+  strong.textContent = comment.user.username;
+  commentHeader.appendChild(strong);
+
+  const commentDate = document.createElement('span');
+  commentDate.classList.add('comment-date');
+  commentDate.textContent = getTimeAgo(comment.createdAt);
+  commentHeader.appendChild(commentDate);
+
+
+  const commentText = document.createElement('p');
+  commentText.classList.add('comment-text');
+  commentText.textContent = comment.content;
+  commentContent.appendChild(commentText);
+
+  const replyButton = document.createElement('button');
+  replyButton.classList.add('btn-reply');
+  replyButton.textContent = 'Reply';
+  commentContent.appendChild(replyButton);
+
+  const replyScore = document.createElement('div');
+  replyScore.classList.add('reply-score');
+  commentContent.appendChild(replyScore);
+
+  const minusButton = document.createElement('button');
+  minusButton.classList.add('score-btn', 'score-btn-minus');
+  minusButton.textContent = '-';
+  replyScore.appendChild(minusButton);
+
+
+  const scoreCounter = document.createElement('span');
+  scoreCounter.textContent = comment.score;
+  replyScore.appendChild(scoreCounter);
+
+  const plusButton = document.createElement('button');
+  plusButton.classList.add('score-btn', 'score-btn-plus');
+  plusButton.textContent = '+';
+  replyScore.appendChild(plusButton);
+
+  const repliesList = document.createElement('div');
+  repliesList.classList.add('replies');
+  commentContent.appendChild(repliesList);
+
+  plusButton.addEventListener('click', () => {
+    comment.score++;
+    scoreCounter.textContent = comment.score;
+  });
+
+  minusButton.addEventListener('click', () => {
+    if (comment.score > 0) {
+      comment.score--;
+      scoreCounter.textContent = comment.score;
+    }
+  });
+
+  replyButton.addEventListener('click', () => {
+    const replyForm = document.createElement('form');
+    replyForm.classList.add('reply-form', 'form-group');
+
+    const formGroup = document.createElement('div');
+    formGroup.classList.add('form-group');
+    replyForm.appendChild(formGroup);
+
+    const label = document.createElement('label');
+    label.htmlFor = 'reply-text';
+    formGroup.appendChild(label);
+
+    const textarea = document.createElement('textarea');
+    textarea.id = 'reply-text';
+    textarea.classList.add('form-control');
+    textarea.rows = 3;
+    formGroup.appendChild(textarea);
+
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.classList.add('btn', 'btn-primary', 'submit-btn');
+    submitButton.textContent = 'Send';
+    replyForm.appendChild(submitButton);
+
+    commentContent.appendChild(replyForm);
+
+    submitButton.addEventListener('click', event => {
+      event.preventDefault();
+      const replyText = textarea.value;
+      addReply(comment.id, replyText);
+      commentContent.removeChild(replyForm);
+    });
+  });
+
   commentsList.appendChild(div);
 
   mcomments.push(comment);
-  localStorage.setItem('comments', JSON.stringify(mcomments));
 }
 
-
-// Ajouter un nouveau commentaire lorsqu'on clique sur le bouton "Send"
 document.getElementById('comment-send-btn').addEventListener('click', event => {
   event.preventDefault();
 
@@ -296,39 +358,39 @@ document.getElementById('comment-send-btn').addEventListener('click', event => {
 
   const newComment = {
     id: Date.now(),
-    content: comment,
-    createdAt: new Date().toLocaleString(),
-    score: 0, 
     user: {
-      image: currentUser.image,
-      username: currentUser.username
-    }
+      username: 'juliusomo',
+      image: {
+        png: './images/avatars/image-juliusomo.png'
+      }
+    },
+    createdAt: new Date().toLocaleString(),
+    content: comment,
+    score: 0
   };
-  
+
   addComment(newComment);
 
   document.getElementById('comment').value = '';
 });
 
-// Ajouter un nouveau commentaire lorsqu'on clique sur le bouton "Send" (mobile)
-document.getElementById('comment-send-btn-mobile').addEventListener('click', event => {
-  event.preventDefault();
 
-  const comment = document.getElementById('comment').value;
 
-  const newComment = {
-    id: Date.now(),
-    content: comment,
-    createdAt: new Date().toLocaleString(),
-    score: 0, 
-    user: {
-      image: currentUser.image,
-      username: currentUser.username
-    }
-  };
-  
-
-  addComment(newComment);
-
-  document.getElementById('comment').value = '';
-});
+function getTimeAgo(timestamp) {
+  const now = new Date();
+  const diff = now - timestamp;
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  if (days > 0) {
+    return `il y a ${days} jour${days > 1 ? 's' : ''}`;
+  }
+  if (hours > 0) {
+    return `il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+  }
+  if (minutes > 0) {
+    return `il y a ${minutes} minute${minutes > 1 ? 's' : ''}`;
+  }
+  return 'a few seconds ago';
+}
