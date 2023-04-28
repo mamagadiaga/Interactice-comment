@@ -131,9 +131,10 @@ form.reply-form {
 .score-btn-minus{
   border: 1px solid #ccc;
   border-right: none;
+  background-color: white;
 }
 .reply-score span{
-background-color: #cccccc3d;
+background-color: white;
 padding: 2px;
 padding-bottom: 3px;
 border: 1px solid #ccc;
@@ -144,6 +145,7 @@ border-right: none;
 .score-btn-plus{
   border: 1px solid #ccc;
   border-left: none;
+  background-color: white;
 }
 
 .btn-reply {
