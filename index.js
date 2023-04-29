@@ -352,7 +352,7 @@ function addComment(comment) {
   mcomments.push(comment);
 }
 
-document.getElementById('comment-send-btn').addEventListener('click', event => {
+document.getElementById('comment-send-btn-mobile').addEventListener('click', event => {
   event.preventDefault();
 
   const comment = document.getElementById('comment').value;
