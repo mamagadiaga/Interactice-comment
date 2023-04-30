@@ -51,7 +51,11 @@ function createReplyForm(commentId, div) {
 
   replyForm.addEventListener('submit', event => {
     event.preventDefault();
-    const replyText = replyForm.querySelector('#reply-text').value;
+    const replyText = replyForm.querySelector('#reply-text').value.trim();
+    if (replyText.length === 0) {
+      // show an error message or do nothing
+      return;
+    }
     const newReply = {
       id: Date.now(),
       content: replyText,
@@ -77,6 +81,7 @@ function createReplyForm(commentId, div) {
   const replyText = replyForm.querySelector('#reply-text');
   replyText.value = `@${userName} `;
 }
+
 
 
 
@@ -198,6 +203,7 @@ fetch('./db.json')
         scoreCounter.textContent = comment.score;
       }
     });
+    
   
     replyButton.addEventListener('click', () => {
       const replyForm = document.createElement('form');
@@ -228,9 +234,16 @@ fetch('./db.json')
       submitButton.addEventListener('click', event => {
         event.preventDefault();
         const replyText = textarea.value;
+        if (replyText.length === 0) {
+          alert('Le commentaire est vide');
+          event.preventDefault();
+        }else{
+          
         addReply(comment.id, replyText);
         commentContent.removeChild(replyForm);
+        }
       });
+      
     });
   
     return div;
@@ -395,3 +408,6 @@ function getTimeAgo(timestamp) {
   }
   return 'a few seconds ago';
 }
+
+
+
